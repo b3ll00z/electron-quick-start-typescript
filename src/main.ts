@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserView, BrowserWindow } from "electron";
 import * as path from "path";
 
 function createWindow() {
@@ -10,12 +10,25 @@ function createWindow() {
     },
     width: 800,
   });
+  const firstView = new BrowserView();
+  const secondView = new BrowserView();
+  const thirdView = new BrowserView();
+  firstView.webContents.loadURL("https://electronjs.org");
+  secondView.webContents.loadURL("https://electronjs.org");
+  thirdView.webContents.loadURL("https://electronjs.org");
 
+  mainWindow.addBrowserView(firstView);
+  mainWindow.addBrowserView(secondView);
+  mainWindow.addBrowserView(thirdView);
+
+  firstView.setBounds({ x: 0, y: 0, width: 200, height: 200 });
+  secondView.setBounds({ x: 0, y: 220, width: 200, height: 200 });
+  thirdView.setBounds({ x: 520, y: 450, width: 200, height: 200 });
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  // mainWindow.loadFile(path.join(__dirname, "../index.html"));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished
